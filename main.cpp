@@ -23,15 +23,15 @@ float ObjectPositionX1 = -0.5;
 float ObjectPositionY1 = -0.5;
 float ObjectPositionZ1 = 0.0;
 
-float ObjectVelocityX1 = 0.7;
-float ObjectVelocityY1 = 0.5;
+float ObjectVelocityX1 = 0.5;
+float ObjectVelocityY1 = 0.4;
 float ObjectVelocityZ1 = 0.0;
 
-float ObjectAccelerationX1 =  0.5;
-float ObjectAccelerationY1 = -0.4905;
+float ObjectAccelerationX1 =  0.0;
+float ObjectAccelerationY1 = -0.0;
 
 
-float radius2 = 0.01;
+float radius2 = 0.02;
 const int iterations2 = 20;
 float beta2 = 360.0f / iterations2 * (2 * PI / 360.0f);
 float alpha2 = beta2;
@@ -45,12 +45,12 @@ float ObjectPositionX2 =  0.95;
 float ObjectPositionY2 = -0.95;
 float ObjectPositionZ2 =  0.0;
 
-float ObjectVelocityX2 = -0.7;
-float ObjectVelocityY2 =  0.5;
+float ObjectVelocityX2 = -0.3;
+float ObjectVelocityY2 =  0.6;
 float ObjectVelocityZ2 =  0.0;
 
-float ObjectAccelerationX2 = -0.5;
-float ObjectAccelerationY2 = -0.4905;
+float ObjectAccelerationX2 = -0.0;
+float ObjectAccelerationY2 = -0.0;
 
 GLfloat verticesbox[] = {
 
@@ -153,7 +153,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dynamic Window", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(3840, 2160, "Dynamic Window", nullptr, nullptr);
 
     if (!window) {
 
@@ -413,12 +413,23 @@ void updateobjectposition1() {
 
 	bool colisionBorder = colisionBorderDetection(ObjectPositionX1, ObjectPositionY1, radius1);
 
+
 	if (colisionBorder) {
 
-		ObjectVelocityX1 = -ObjectVelocityX1;
-		ObjectVelocityY1 = -ObjectVelocityY1;
+		if (ObjectPositionX1 - radius1 < verticesbox[0] || ObjectPositionX1 + radius1 > verticesbox[2]) {
+
+			ObjectVelocityX1 = -ObjectVelocityX1;
+
+		}
+
+		else if (ObjectPositionY1 - radius1 < verticesbox[1] || ObjectPositionY1 + radius1 > verticesbox[7]) {
+
+			ObjectVelocityY1 = -ObjectVelocityY1;
+
+		}
 
 	}
+
 
 	for(int i = 0; i < 6*iterations1; i++) {
 
@@ -468,8 +479,17 @@ void updateobjectposition2() {
 
 	if (colisionBorder) {
 
-		ObjectVelocityX2 = -ObjectVelocityX2;
-		ObjectVelocityY2 = -ObjectVelocityY2;
+		if (ObjectPositionX2 - radius2 < verticesbox[0] || ObjectPositionX2 + radius2 > verticesbox[2]) {
+
+			ObjectVelocityX2 = -ObjectVelocityX2;
+
+		}
+
+		else if (ObjectPositionY2 - radius2 < verticesbox[1] || ObjectPositionY2 + radius2 > verticesbox[7]) {
+
+			ObjectVelocityY2 = -ObjectVelocityY2;
+
+		}
 
 	}
 
